@@ -1,4 +1,5 @@
-IMAGE_NAME="surrogate-nes-image"
+VERSION="0.0"
+IMAGE_NAME="petr-parker:${VERSION}"
 
 docker build -t $IMAGE_NAME . -f Dockerfile
 
@@ -19,16 +20,18 @@ fi
 docker run \
     -it \
     --rm \
-    --name surrogate-nes-container \
+    --name petr-parker-container \
     --gpus all \
     --ipc host \
     --runtime=nvidia \
     -p 6012:6011 \
     -e DISPLAY=$DISPLAY \
     --shm-size=64g \
-    -v ./code:/app/code \
+    -v /home/pbabkin:/pbabkin \
+    -v /home/vkurmanov/work/projects/board_detect/data/:/data \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     --env LIBGL_ALWAYS_SOFTWARE=1 \
     --volume="$XAUTH:$XAUTH" \
     -e XAUTHORITY=$XAUTH \
     $IMAGE_NAME /bin/bash
+
