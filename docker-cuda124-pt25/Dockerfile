@@ -72,7 +72,9 @@ RUN jupyter lab --generate-config && \
     echo "c.ServerApp.allow_root = True" >> /root/.jupyter/jupyter_lab_config.py && \
     echo "c.ServerApp.open_browser = False" >> /root/.jupyter/jupyter_lab_config.py && \
     echo "c.ServerApp.port = 8888" >> /root/.jupyter/jupyter_lab_config.py && \
-    echo "c.ServerApp.notebook_dir = '/app/notebooks'" >> /root/.jupyter/jupyter_lab_config.py
+    echo "c.ServerApp.notebook_dir = '/app/notebooks'" >> /root/.jupyter/jupyter_lab_config.py && \
+    echo "jupyter lab --allow-root" > /app/launch_jupyter.sh && \
+    chmod +x /app/launch_jupyter.sh
 
 EXPOSE 6011
 
