@@ -24,7 +24,7 @@ docker run \
     --gpus all \
     --ipc host \
     --runtime=nvidia \
-    -p 6012:6011 \
+    -p 8888:8888 \
     -e DISPLAY=$DISPLAY \
     --shm-size=64g \
     -v /home/pbabkin:/pbabkin \

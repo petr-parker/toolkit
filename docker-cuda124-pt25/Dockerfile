@@ -36,6 +36,7 @@ WORKDIR /app
 
 RUN python -m pip install --upgrade pip && python -m pip install filelock
 
+# ======== torch ========
 RUN wget https://download.pytorch.org/whl/cu124/torch-2.5.1%2Bcu124-cp310-cp310-linux_x86_64.whl#sha256=9dde30f399ca22137455cca4d47140dfb7f4176e2d16a9729fc044eebfadb13a && \
     python -m pip install torch-2.5.1+cu124-cp310-cp310-linux_x86_64.whl
 
@@ -51,9 +52,30 @@ RUN wget https://files.pythonhosted.org/packages/a4/18/1da9464c86c3e59660d40515a
     && python configure.py --cuda-root=/usr/local/cuda-12.4 \
     && su -c "make install"
 
+# ======== requirements ==========
+
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# ======== croc ==========
+
 RUN curl https://getcroc.schollz.com | bash
+
+# ======== jupyter ========
+
+RUN pip install jupyterlab==4.2.7 notebook==7.2.2 ipykernel==6.29.5
+
+RUN mkdir /app/notebooks
+
+RUN jupyter lab --generate-config && \
+    echo "c.ServerApp.ip = '0.0.0.0'" >> /root/.jupyter/jupyter_lab_config.py && \
+    echo "c.ServerApp.allow_root = True" >> /root/.jupyter/jupyter_lab_config.py && \
+    echo "c.ServerApp.open_browser = False" >> /root/.jupyter/jupyter_lab_config.py && \
+    echo "c.ServerApp.port = 8888" >> /root/.jupyter/jupyter_lab_config.py && \
+    echo "c.ServerApp.notebook_dir = '/app/notebooks'" >> /root/.jupyter/jupyter_lab_config.py
+
+EXPOSE 6011
+
+# =========================
 
 RUN rm requirements.txt
