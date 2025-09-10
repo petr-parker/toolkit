@@ -28,7 +28,7 @@ docker run \
     -e DISPLAY=$DISPLAY \
     --shm-size=64g \
     -v /home/pbabkin:/pbabkin \
-    -v /home/vkurmanov/work/projects/board_detect/data/:/data \
+    -v /media:/media \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     --env LIBGL_ALWAYS_SOFTWARE=1 \
     --volume="$XAUTH:$XAUTH" \

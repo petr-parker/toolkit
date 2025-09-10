@@ -16,3 +16,6 @@ gitpython==3.1.45
 pycocotools==2.0.10
 requests==2.32.5
 cvat_sdk==2.41.0
+scikit-image==0.25.2
+treelib==1.8.0
+easydict==1.13
